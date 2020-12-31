@@ -4,6 +4,8 @@ import hau.kute.spring.tutorial.springbootmicroservice.bean.User;
 import hau.kute.spring.tutorial.springbootmicroservice.exception.UserNotFoundException;
 import hau.kute.spring.tutorial.springbootmicroservice.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
@@ -34,6 +36,12 @@ public class UserResource {
 			throw new UserNotFoundException(
 							"Can not found user[id=" + id + "]");
 		}
+
+		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass())
+						.retrieveAllUsers());
+
+		user.add(linkTo.withRel("all-users"));
+
 		return user;
 	}
 

@@ -1,9 +1,11 @@
 package hau.kute.spring.tutorial.springbootmicroservice.bean;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-public class User {
+public class User extends RepresentationModel<User> {
 
     private Integer id;
 
