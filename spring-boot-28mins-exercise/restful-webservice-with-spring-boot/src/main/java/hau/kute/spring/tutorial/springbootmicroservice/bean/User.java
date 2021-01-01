@@ -1,11 +1,13 @@
 package hau.kute.spring.tutorial.springbootmicroservice.bean;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.Size;
 import java.util.Date;
 
+@JsonFilter("UserFilter")
 public class User extends RepresentationModel<User> {
 
     private Integer id;

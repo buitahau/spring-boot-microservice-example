@@ -1,5 +1,8 @@
 package hau.kute.spring.tutorial.springbootmicroservice.controller;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import hau.kute.spring.tutorial.springbootmicroservice.bean.User;
 import hau.kute.spring.tutorial.springbootmicroservice.exception.UserNotFoundException;
 import hau.kute.spring.tutorial.springbootmicroservice.service.UserDaoService;
@@ -10,11 +13,14 @@ import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
 
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class UserResource {
@@ -23,9 +29,50 @@ public class UserResource {
 	private UserDaoService _userService;
 
 	@GetMapping("/users")
-	public List<User> retrieveAllUsers() {
+	public MappingJacksonValue retrieveAllUsers() {
 
-		return _userService.findAll();
+		List<User> users = _userService.findAll();
+
+		return dynamicFilteringResponse(users);
+	}
+
+	@GetMapping("/users-filtering")
+	public MappingJacksonValue retrieveAllUsersFiltering() {
+
+		List<User> users = _userService.findAll();
+
+		Set<String> fields = new HashSet<>();
+		fields.add("id");
+		fields.add("name");
+
+		return dynamicFilteringResponse(users, fields);
+	}
+
+	private MappingJacksonValue dynamicFilteringResponse(List<User> users) {
+
+		return dynamicFilteringResponse(users, null);
+	}
+
+	private MappingJacksonValue dynamicFilteringResponse(
+					List<User> users, Set<String> fields) {
+
+		MappingJacksonValue mapping = new MappingJacksonValue(users);
+
+		SimpleBeanPropertyFilter simpleBeanPropertyFilter =
+						SimpleBeanPropertyFilter.serializeAll();
+
+		if (fields != null && fields.size() > 0) {
+			simpleBeanPropertyFilter =
+							SimpleBeanPropertyFilter.filterOutAllExcept(fields);
+		}
+
+		FilterProvider filters =
+						new SimpleFilterProvider().addFilter("UserFilter",
+										simpleBeanPropertyFilter);
+
+		mapping.setFilters(filters);
+
+		return mapping;
 	}
 
 	@GetMapping("/users/{id}")

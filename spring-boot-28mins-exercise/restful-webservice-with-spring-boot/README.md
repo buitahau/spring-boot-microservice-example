@@ -11,3 +11,5 @@ your application (/actuator).
 - @JsonIgnore, @JsonIgnoreProperties: Use to filter the properties of the
 bean when serializing and de-serializing the JSON data. That fields will
 never come in response.
+- MappingJacksonValue: Dynamic filtering the bean's properties depend on
+request.
