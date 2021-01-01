@@ -8,3 +8,6 @@ representations that follow the HATEOAS principle when working with Spring and e
 help you monitor and manage your application when you push it to production.
 Auditing, health, and metrics gathering can also be automatically applied to
 your application (/actuator).
+- @JsonIgnore, @JsonIgnoreProperties: Use to filter the properties of the
+bean when serializing and de-serializing the JSON data. That fields will
+never come in response.

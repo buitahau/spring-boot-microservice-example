@@ -1,5 +1,6 @@
 package hau.kute.spring.tutorial.springbootmicroservice.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.Size;
@@ -14,14 +15,18 @@ public class User extends RepresentationModel<User> {
 
     private Date birthDate;
 
+    @JsonIgnore
+    private String password;
+
     public User() {
 
     }
 
-    public User(Integer id, String name, Date birthDate) {
+    public User(Integer id, String name, Date birthDate, String password) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -46,5 +51,15 @@ public class User extends RepresentationModel<User> {
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getPassword() {
+
+        return password;
+    }
+
+    public void setPassword(String password) {
+
+        this.password = password;
     }
 }

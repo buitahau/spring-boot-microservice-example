@@ -14,10 +14,12 @@ public class UserDaoService {
 
      private static int userCount = 3;
 
+     private static final String DEFAULT_PASSWORD = "123456";
+
      static {
-         users.add(new User(1, "Adam", new Date()));
-         users.add(new User(2, "Eve", new Date()));
-         users.add(new User(3, "Jack", new Date()));
+         users.add(new User(1, "Adam", new Date(), DEFAULT_PASSWORD));
+         users.add(new User(2, "Eve", new Date(), DEFAULT_PASSWORD));
+         users.add(new User(3, "Jack", new Date(), DEFAULT_PASSWORD));
      }
 
      public List<User> findAll() {
@@ -26,6 +28,7 @@ public class UserDaoService {
 
      public User save(User user) {
          user.setId(++userCount);
+         user.setPassword(DEFAULT_PASSWORD);
          users.add(user);
          return user;
      }
