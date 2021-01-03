@@ -9,6 +9,8 @@ import hau.kute.spring.tutorial.springbootmicroservice.service.UserDaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import javax.validation.Valid;
@@ -28,7 +30,11 @@ public class UserResource {
 	@Autowired
 	private UserDaoService _userService;
 
-	@GetMapping("/users")
+	@GetMapping(value = "/users",
+					produces = {
+							MediaType.APPLICATION_XML_VALUE,
+							MediaType.APPLICATION_JSON_VALUE
+					})
 	public MappingJacksonValue retrieveAllUsers() {
 
 		List<User> users = _userService.findAll();
