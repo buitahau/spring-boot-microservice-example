@@ -13,3 +13,13 @@ bean when serializing and de-serializing the JSON data. That fields will
 never come in response.
 - MappingJacksonValue: Dynamic filtering the bean's properties depend on
 request.
+
+-------------------
+Run spring boot project with command
+Go to project directory
+Run:
+ - Default configuration : `mvn spring-boot:run`
+ - With arguments: `mvn spring-boot:run -Dspring-boot.run.arguments=.....`
+
+-------------------
+- Zuul: Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application. As an edge service application, Zuul is built to enable dynamic routing, monitoring, resiliency and security. It also has the ability to route requests to multiple Amazon Auto Scaling Groups as appropriate.
