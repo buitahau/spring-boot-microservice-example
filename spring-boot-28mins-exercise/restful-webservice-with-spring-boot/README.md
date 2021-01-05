@@ -23,3 +23,12 @@ Run:
 
 -------------------
 - Zuul: Zuul is the front door for all requests from devices and web sites to the backend of the Netflix streaming application. As an edge service application, Zuul is built to enable dynamic routing, monitoring, resiliency and security. It also has the ability to route requests to multiple Amazon Auto Scaling Groups as appropriate.
+
+-------------------
+- H2 database: an open-source lightweight Java database. It can be embedded
+in Java applications or run in the client-server mode. Mainly, H2 database
+can be configured to run as inmemory database, which means that data will not
+ persist on the disk. Because of embedded database it is not used for
+ production development, but mostly used for development and testing. To go
+ to h2 administrator, hit "/h2-console" with username is "sa" and password is
+ empty.
