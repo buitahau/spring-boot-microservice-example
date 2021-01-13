@@ -7,13 +7,23 @@ import org.modelmapper.convention.MatchingStrategies;
 
 public class UserModelMapper {
 
-	public static UserEntity parseFromDTOToEntity(UserDTO user) {
+	public static UserEntity parseFromDTOToEntity(UserDTO userDTO) {
 
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies
-						.STRICT);
-		UserEntity userEntity = modelMapper.map(user, UserEntity.class);
+		UserEntity userEntity = modelMapper.map(userDTO, UserEntity.class);
 		return userEntity;
+	}
+
+	public static UserDTO parseFromEntityToDTO(UserEntity userEntity) {
+
+		UserDTO userDTO = modelMapper.map(userEntity, UserDTO.class);
+		return userDTO;
+	}
+
+	private static final ModelMapper modelMapper = new ModelMapper();
+
+	static {
+		modelMapper.getConfiguration().setMatchingStrategy(
+						MatchingStrategies.STRICT);
 	}
 
 }

@@ -4,5 +4,5 @@ import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 
 public interface UserService {
 
-	public UserDTO save(UserDTO user);
+	UserDTO save(UserDTO user);
 }
