@@ -5,6 +5,7 @@ import hau.kute.spring.tutorial.springbootmicroservice.data.UsersRepository;
 import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 import hau.kute.spring.tutorial.springbootmicroservice.util.modelmapper.UserModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -14,9 +15,12 @@ public class UserServiceImpl implements UserService {
 
     private UsersRepository usersRepository;
 
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository) {
+    public UserServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.usersRepository = usersRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     /*
@@ -47,9 +51,10 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO save(UserDTO userDTO) {
         userDTO.setUserId(UUID.randomUUID().toString());
+        userDTO.setEncryptedPassword(bCryptPasswordEncoder.encode(userDTO.getPassword()));
 
         UserEntity userEntity = UserModelMapper.parseFromDTOToEntity(userDTO);
-        userEntity.setEncryptedPassword(DEFAULT_PASSWORD);
+
         usersRepository.save(userEntity);
 
         return UserModelMapper.parseFromEntityToDTO(userEntity);

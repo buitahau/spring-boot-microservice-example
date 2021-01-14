@@ -1,5 +1,6 @@
 package hau.kute.spring.tutorial.springbootmicroservice.shared;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.validation.constraints.Email;
@@ -27,19 +28,22 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	@Email
 	private String email;
 
+	@JsonIgnore
+	private String encryptedPassword;
+
 	public UserDTO(){
 	}
 
 	public UserDTO(
 					String userId, String userName, Date birthDate, String
-					password, String
-					email) {
+					password, String email, String encryptedPassword) {
 
 		this.userId = userId;
 		this.userName = userName;
 		this.birthDate = birthDate;
 		this.password = password;
 		this.email = email;
+		this.encryptedPassword = encryptedPassword;
 	}
 
 	public String getUserId() {
@@ -90,5 +94,15 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	public void setEmail(String email) {
 
 		this.email = email;
+	}
+
+	public String getEncryptedPassword() {
+
+		return encryptedPassword;
+	}
+
+	public void setEncryptedPassword(String encryptedPassword) {
+
+		this.encryptedPassword = encryptedPassword;
 	}
 }
