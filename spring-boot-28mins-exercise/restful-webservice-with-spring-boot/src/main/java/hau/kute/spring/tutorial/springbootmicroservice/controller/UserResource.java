@@ -23,57 +23,6 @@ public class UserResource {
 	private UserService _userService;
 
 	/*
-	@GetMapping(produces = {
-							MediaType.APPLICATION_XML_VALUE,
-							MediaType.APPLICATION_JSON_VALUE
-					})
-	public MappingJacksonValue retrieveAllUsers() {
-
-		List<UserRequestResponse> userRequestResponses = _userService.findAll();
-
-		return dynamicFilteringResponse(userRequestResponses);
-	}
-
-	@GetMapping("/filtering")
-	public MappingJacksonValue retrieveAllUsersFiltering() {
-
-		List<UserRequestResponse> userRequestResponses = _userService.findAll();
-
-		Set<String> fields = new HashSet<>();
-		fields.add("id");
-		fields.add("name");
-
-		return dynamicFilteringResponse(userRequestResponses, fields);
-	}
-
-	private MappingJacksonValue dynamicFilteringResponse(List<UserRequestResponse> userRequestResponses) {
-
-		return dynamicFilteringResponse(userRequestResponses, null);
-	}
-
-	private MappingJacksonValue dynamicFilteringResponse(
-					List<UserRequestResponse> userRequestResponses, Set<String> fields) {
-
-		MappingJacksonValue mapping = new MappingJacksonValue(
-						userRequestResponses);
-
-		SimpleBeanPropertyFilter simpleBeanPropertyFilter =
-						SimpleBeanPropertyFilter.serializeAll();
-
-		if (fields != null && fields.size() > 0) {
-			simpleBeanPropertyFilter =
-							SimpleBeanPropertyFilter.filterOutAllExcept(fields);
-		}
-
-		FilterProvider filters =
-						new SimpleFilterProvider().addFilter("UserFilter",
-										simpleBeanPropertyFilter);
-
-		mapping.setFilters(filters);
-
-		return mapping;
-	}
-
 	@GetMapping("/{id}")
 	public UserRequestResponse retrieveUser(@PathVariable int id) {
 
@@ -90,14 +39,15 @@ public class UserResource {
 
 		return user;
 	}
-
 	*/
 
 	@PostMapping(
-			consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType
-					.APPLICATION_XML_VALUE},
-			produces = { MediaType.APPLICATION_JSON_VALUE, MediaType
-							.APPLICATION_XML_VALUE}
+			consumes = {
+				MediaType.APPLICATION_JSON_VALUE,
+				MediaType.APPLICATION_XML_VALUE},
+			produces = {
+				MediaType.APPLICATION_JSON_VALUE,
+				MediaType.APPLICATION_XML_VALUE}
 	)
 	public ResponseEntity<UserDTO> createUser(
 					@RequestBody @Valid UserDTO userDTO) {
