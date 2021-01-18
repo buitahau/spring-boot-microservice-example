@@ -36,10 +36,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 			.antMatchers("/**")
 			.hasIpAddress(environment.getProperty("gateway.ip"))
+			.anyRequest().authenticated()
 			.and()
 			.addFilter(getAuthenticationFilter());
-		http.headers().frameOptions().disable();
 
+		http.headers().frameOptions().disable();
 	}
 
 	private AuthenticationFilter getAuthenticationFilter()
@@ -49,7 +50,6 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		authenticationFilter.setFilterProcessesUrl(environment.getProperty
 						("login.url.path"));
 		return authenticationFilter;
-
 	}
 
 	@Override
