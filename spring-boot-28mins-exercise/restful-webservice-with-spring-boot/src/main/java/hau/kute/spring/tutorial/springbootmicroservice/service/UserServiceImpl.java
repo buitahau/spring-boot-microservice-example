@@ -2,6 +2,7 @@ package hau.kute.spring.tutorial.springbootmicroservice.service;
 
 import hau.kute.spring.tutorial.springbootmicroservice.data.UserEntity;
 import hau.kute.spring.tutorial.springbootmicroservice.data.UsersRepository;
+import hau.kute.spring.tutorial.springbootmicroservice.exception.UserNotFoundException;
 import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 import hau.kute.spring.tutorial.springbootmicroservice.util.modelmapper.UserModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,17 @@ public class UserServiceImpl implements UserService {
                             "email = " + email);
         }
 
+        return UserModelMapper.parseFromEntityToDTO(userEntity);
+    }
+
+    @Override
+    public UserDTO getUserById(String userId) {
+        UserEntity userEntity = usersRepository.findByUserId(userId);
+
+        if(userEntity == null) {
+            throw new UserNotFoundException(
+                            "Could not found user with userId = " + userId);
+        }
         return UserModelMapper.parseFromEntityToDTO(userEntity);
     }
 

@@ -4,6 +4,7 @@ import hau.kute.spring.tutorial.springbootmicroservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,8 +35,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.csrf()
 			.disable()
 			.authorizeRequests()
-			.antMatchers("/**")
-			.hasIpAddress(environment.getProperty("gateway.ip"))
+			.antMatchers("/users").hasIpAddress(environment.getProperty("gateway.ip"))
+			.antMatchers("/login").hasIpAddress(environment.getProperty("gateway.ip"))
+			.antMatchers("/h2-console/**").hasIpAddress(environment
+						.getProperty("gateway.ip"))
 			.anyRequest().authenticated()
 			.and()
 			.addFilter(getAuthenticationFilter());

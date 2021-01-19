@@ -4,7 +4,6 @@ import hau.kute.spring.tutorial.springbootmicroservice.service.UserService;
 import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
@@ -22,24 +21,19 @@ public class UserResource {
 	@Autowired
 	private UserService _userService;
 
-	/*
-	@GetMapping("/{id}")
-	public UserRequestResponse retrieveUser(@PathVariable int id) {
+//	@GetMapping("/{id}")
+//	public UserRequestResponse retrieveUser(@PathVariable String userId) {
+//
+//		UserDTO user = _userService.getUserById(userId);
+//
+//		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass())
+//						.retrieveAllUsers());
+//
+//		user.add(linkTo.withRel("all-users"));
+//
+//		return user;
+//	}
 
-		UserRequestResponse user = _userService.findOne(id);
-		if (user == null) {
-			throw new UserNotFoundException(
-							"Can not found user[id=" + id + "]");
-		}
-
-		WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass())
-						.retrieveAllUsers());
-
-		user.add(linkTo.withRel("all-users"));
-
-		return user;
-	}
-	*/
 
 	@PostMapping(
 			consumes = {
