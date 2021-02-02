@@ -1,6 +1,7 @@
 package hau.kute.spring.tutorial.springbootmicroservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,9 @@ public class HelloWorldController {
 	@Autowired
 	private Environment environment;
 
+	@Value("${test.property}")
+	private String testProperty;
+
 	@GetMapping(path="/hello-world-internationalized")
 	public String helloWorldInternationalized(
 					@RequestHeader(name = "Accept-Language", required = false) Locale locale) {
@@ -27,7 +31,11 @@ public class HelloWorldController {
 
 	@GetMapping("/status-checking")
 	public String statusChecking() {
-		return "Working on port " + environment.getProperty("local.server" +
-						".port");
+		String result =  "Working on port "
+						+ environment.getProperty("local.server.port");
+
+		result += ", with test property = " + testProperty;
+
+		return result;
 	}
 }

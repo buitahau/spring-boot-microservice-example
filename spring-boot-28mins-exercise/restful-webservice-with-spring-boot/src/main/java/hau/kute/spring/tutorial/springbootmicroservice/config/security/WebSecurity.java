@@ -35,6 +35,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.csrf()
 			.disable()
 			.authorizeRequests()
+			.antMatchers("/status-checking").permitAll()
 			.antMatchers("/users").hasIpAddress(environment.getProperty("gateway.ip"))
 			.antMatchers("/login").hasIpAddress(environment.getProperty("gateway.ip"))
 			.antMatchers("/h2-console/**").hasIpAddress(environment
