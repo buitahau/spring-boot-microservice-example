@@ -2,6 +2,7 @@ package hau.kute.spring.tutorial.springbootmicroservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -13,6 +14,7 @@ import java.util.Locale;
 
 @SpringBootApplication
 @EnableEurekaClient
+@RefreshScope
 public class SpringBootMicroserviceApplication {
 
 	public static void main(String[] args) {

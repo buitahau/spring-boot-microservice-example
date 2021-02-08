@@ -32,3 +32,22 @@ can be configured to run as inmemory database, which means that data will not
  production development, but mostly used for development and testing. To go
  to h2 administrator, hit "/h2-console" with username is "sa" and password is
  empty.
+
+-------------------
+Centralize Configuration.
+
+It is used for gather the configuration in one place. This will help the
+developer control the configuration in all services. The value of
+configuration in the remote repository has a higher priority than in the local
+service.
+
+We use the `spring-boot-starter-actuator` and the
+`spring-cloud-starter-bus-amqp` dependency to broadcast the changes
+configuration for all services without restarting them.
+Some useful urls:
+- POST /actuator/bus-refresh
+- localhost:15672 with guest/guest
+- localhost:8012/AppConfigServer/default
+- localhost:8012/users-us/default
+
+Errors: https://www.programmersought.com/article/99757216145/
