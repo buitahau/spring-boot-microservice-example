@@ -50,4 +50,18 @@ Some useful urls:
 - localhost:8012/AppConfigServer/default
 - localhost:8012/users-us/default
 
+
 Errors: https://www.programmersought.com/article/99757216145/
+
+-------------------
+Spring Boot Actuator
+
+Provide useful features to manage and monitor spring boot application data
+analysis information.
+
+Some useful features:
+- /health - Health check
+- /beans - Displays a complete list of Beans in your Microservice
+- /httptrace - Displays HTTP trace information (by default, the last 100 HTTP
+ request-response exchanges)
+- And more at https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html
