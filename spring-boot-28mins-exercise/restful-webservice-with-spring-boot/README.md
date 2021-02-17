@@ -65,3 +65,14 @@ Some useful features:
 - /httptrace - Displays HTTP trace information (by default, the last 100 HTTP
  request-response exchanges)
 - And more at https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-features.html
+
+-------------------
+Encryption and Decryption of Configuration Properties
+
+Keyword: download java jce (Java cryptography extension)
+
+2 useful methods:
+- POST /encrypt
+- POST /decrypt
+
+We use the `{cipher}` prefix to mark that the value is encrypted.
