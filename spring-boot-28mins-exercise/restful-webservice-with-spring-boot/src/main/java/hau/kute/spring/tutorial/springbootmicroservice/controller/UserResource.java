@@ -4,9 +4,11 @@ import hau.kute.spring.tutorial.springbootmicroservice.service.UserService;
 import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import javax.print.attribute.standard.Media;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/users")
 public class UserResource {
 
 	@Autowired
@@ -34,15 +35,7 @@ public class UserResource {
 //		return user;
 //	}
 
-
-	@PostMapping(
-			consumes = {
-				MediaType.APPLICATION_JSON_VALUE,
-				MediaType.APPLICATION_XML_VALUE},
-			produces = {
-				MediaType.APPLICATION_JSON_VALUE,
-				MediaType.APPLICATION_XML_VALUE}
-	)
+	@PostMapping(value = "/users")
 	public ResponseEntity<UserDTO> createUser(
 					@RequestBody @Valid UserDTO userDTO) {
 
@@ -52,6 +45,14 @@ public class UserResource {
 
 		return ResponseEntity.created(location).body
 						(userDTO);
+	}
+
+	@GetMapping(value = "/users/{userId}")
+	public ResponseEntity<UserDTO> getUser(@PathVariable("userId") String
+					userId) {
+		UserDTO userDTO = _userService.getUserById(userId);
+
+		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 	}
 
 	private URI _buildURIForUser(String userId) {

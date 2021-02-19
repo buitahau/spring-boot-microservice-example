@@ -76,3 +76,26 @@ Keyword: download java jce (Java cryptography extension)
 - POST /decrypt
 
 We use the `{cipher}` prefix to mark that the value is encrypted.
+
+-------------------
+Communication between microservices
+
+Communication Types
+- Synchronous HTTP communication. The sender micro service has to wait until
+it receives a response and it is also a one to one way of communication.
+- Asynchronous communication over AMQP (Advanced message queuing protocol).
+The sender micro service does not wait until the message is processed. The
+micro service which is called consumer consumes this message from a queue.
+This way there can be event multiple consumers of single message and if a
+task to process the message is very time and resource consuming like for
+example image or video download and processing then send their micro servers
+does not need to wait until this very heavy task is performed.
+
+
+2 ways to communicate between micro services.
+* `RestTemplate`: use HTTP client which allows your code to send HTTP Request
+ and also handle HTTP Response (https://www.appsdeveloperblog
+ .com/spring-resttemplate-tutorial/).
+
+The useful method
+  * `public <T> ResponseEntity<T> exchange(String url, HttpMethod method, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<T> responseType, Object... uriVariables)`

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class UserDTO extends RepresentationModel<UserDTO> implements Serializable {
 
@@ -30,6 +31,8 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 
 	@JsonIgnore
 	private String encryptedPassword;
+
+	private List<AlbumDTO> albums;
 
 	public UserDTO(){
 	}
@@ -104,5 +107,15 @@ public class UserDTO extends RepresentationModel<UserDTO> implements Serializabl
 	public void setEncryptedPassword(String encryptedPassword) {
 
 		this.encryptedPassword = encryptedPassword;
+	}
+
+	public List<AlbumDTO> getAlbums() {
+
+		return albums;
+	}
+
+	public void setAlbums(List<AlbumDTO> albums) {
+
+		this.albums = albums;
 	}
 }

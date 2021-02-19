@@ -3,15 +3,21 @@ package hau.kute.spring.tutorial.springbootmicroservice.service;
 import hau.kute.spring.tutorial.springbootmicroservice.data.UserEntity;
 import hau.kute.spring.tutorial.springbootmicroservice.data.UsersRepository;
 import hau.kute.spring.tutorial.springbootmicroservice.exception.UserNotFoundException;
+import hau.kute.spring.tutorial.springbootmicroservice.shared.AlbumDTO;
 import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 import hau.kute.spring.tutorial.springbootmicroservice.util.modelmapper.UserModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Type;
 import java.util.*;
 
 @Service
@@ -21,10 +27,15 @@ public class UserServiceImpl implements UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    private RestTemplate restTemplate;
+
     @Autowired
-    public UserServiceImpl(UsersRepository usersRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserServiceImpl(UsersRepository usersRepository,
+                    BCryptPasswordEncoder bCryptPasswordEncoder,
+                    RestTemplate restTemplate) {
         this.usersRepository = usersRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.restTemplate = restTemplate;
     }
 
     public UserDTO save(UserDTO userDTO) {
@@ -59,7 +70,20 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException(
                             "Could not found user with userId = " + userId);
         }
-        return UserModelMapper.parseFromEntityToDTO(userEntity);
+        UserDTO userDTO = UserModelMapper.parseFromEntityToDTO(userEntity);
+
+        String albumsUrl = String.format("http://ALBUMS-WS/users/%s/albums",
+                        userId);
+
+        ResponseEntity<List<AlbumDTO>> albumsListResponses = restTemplate
+                        .exchange(albumsUrl, HttpMethod.GET, null, new
+                                        ParameterizedTypeReference<List<AlbumDTO>>() {});
+
+        List<AlbumDTO> albumsList = albumsListResponses.getBody();
+
+        userDTO.setAlbums(albumsList);
+
+        return userDTO;
     }
 
     @Override
