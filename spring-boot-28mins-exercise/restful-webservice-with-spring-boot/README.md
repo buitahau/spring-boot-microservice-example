@@ -103,7 +103,7 @@ The useful method:
 * `Feign`: is an HTTP Client which helps spring boot application send HTTP
 request to a remote or an internal micro service and get back the response.
 Beside that, it is declarative http client, so developer can be easy to read
-and maintain code later. Last, Fiegn support the client - side load balancing.
+and maintain code later. Last, Feign support the client - side load balancing.
 
 Some useful steps:
 
@@ -114,3 +114,9 @@ Some useful steps:
 
     Logger.level.FULL: Show logs when using feign to make it easy for developers
                            debugging.
+
+    ErrorDecoder: it is using to get useful information for example http
+    response, status code, body of response, response's header... We can base
+     on that error to custom the exception. Beside that, we have a central
+     place to handle feign errors. The `decode` method will receive all
+     errors from feign.

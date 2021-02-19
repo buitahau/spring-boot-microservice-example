@@ -1,6 +1,7 @@
 package hau.kute.spring.tutorial.springbootmicroservice;
 
 import feign.Logger;
+import hau.kute.spring.tutorial.springbootmicroservice.shared.FeignErrorDecoder;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -53,7 +54,12 @@ public class SpringBootMicroserviceApplication {
 	}
 
 	@Bean
-	Logger.Level getFeignLogger() {
+	public Logger.Level getFeignLogger() {
 		return Logger.Level.BASIC;
+	}
+
+	@Bean
+	public FeignErrorDecoder getFeignErrorDecoder() {
+		return new FeignErrorDecoder();
 	}
 }
