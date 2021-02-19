@@ -91,11 +91,23 @@ task to process the message is very time and resource consuming like for
 example image or video download and processing then send their micro servers
 does not need to wait until this very heavy task is performed.
 
-
 2 ways to communicate between micro services.
 * `RestTemplate`: use HTTP client which allows your code to send HTTP Request
  and also handle HTTP Response (https://www.appsdeveloperblog
  .com/spring-resttemplate-tutorial/).
 
-The useful method
-  * `public <T> ResponseEntity<T> exchange(String url, HttpMethod method, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<T> responseType, Object... uriVariables)`
+The useful method:
+
+  `public <T> ResponseEntity<T> exchange(String url, HttpMethod method, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<T> responseType, Object... uriVariables)`
+
+* `Feign`: is an HTTP Client which helps spring boot application send HTTP
+request to a remote or an internal micro service and get back the response.
+Beside that, it is declarative http client, so developer can be easy to read
+and maintain code later. Last, Fiegn support the client - side load balancing.
+
+Some useful steps:
+
+    `@EnableFeignClients`
+
+    `@FeignClient(name="target-ws")`: add on interface which will call to
+    target service.

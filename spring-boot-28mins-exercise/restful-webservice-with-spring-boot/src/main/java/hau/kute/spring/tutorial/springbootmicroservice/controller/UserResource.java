@@ -1,6 +1,7 @@
 package hau.kute.spring.tutorial.springbootmicroservice.controller;
 
 import hau.kute.spring.tutorial.springbootmicroservice.service.UserService;
+import hau.kute.spring.tutorial.springbootmicroservice.shared.AlbumDTO;
 import hau.kute.spring.tutorial.springbootmicroservice.shared.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -51,6 +52,14 @@ public class UserResource {
 	public ResponseEntity<UserDTO> getUser(@PathVariable("userId") String
 					userId) {
 		UserDTO userDTO = _userService.getUserById(userId);
+
+		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
+	}
+
+	@GetMapping(value = "/users/{userId}/fiegn")
+	public ResponseEntity<UserDTO> getUserUsingFeign(@PathVariable("userId")
+					String userId) {
+		UserDTO userDTO = _userService.getUserByIdUsingFeign(userId);
 
 		return ResponseEntity.status(HttpStatus.OK).body(userDTO);
 	}

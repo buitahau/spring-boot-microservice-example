@@ -30,6 +30,9 @@ public class UserServiceImpl implements UserService {
     private RestTemplate restTemplate;
 
     @Autowired
+    private AlbumServiceClient albumServiceClient;
+
+    @Autowired
     public UserServiceImpl(UsersRepository usersRepository,
                     BCryptPasswordEncoder bCryptPasswordEncoder,
                     RestTemplate restTemplate) {
@@ -82,6 +85,21 @@ public class UserServiceImpl implements UserService {
         List<AlbumDTO> albumsList = albumsListResponses.getBody();
 
         userDTO.setAlbums(albumsList);
+
+        return userDTO;
+    }
+
+    @Override
+    public UserDTO getUserByIdUsingFeign(String userId) {
+        UserEntity userEntity = usersRepository.findByUserId(userId);
+
+        if(userEntity == null) {
+            throw new UserNotFoundException(
+                            "Could not found user with userId = " + userId);
+        }
+        UserDTO userDTO = UserModelMapper.parseFromEntityToDTO(userEntity);
+
+        userDTO.setAlbums(albumServiceClient.getAlbums(userId));
 
         return userDTO;
     }
