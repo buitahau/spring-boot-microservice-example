@@ -1,5 +1,6 @@
 package hau.kute.spring.tutorial.springbootmicroservice;
 
+import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -49,5 +50,10 @@ public class SpringBootMicroserviceApplication {
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
 		return new RestTemplate();
+	}
+
+	@Bean
+	Logger.Level getFeignLogger() {
+		return Logger.Level.BASIC;
 	}
 }

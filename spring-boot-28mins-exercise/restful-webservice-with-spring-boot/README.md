@@ -107,7 +107,10 @@ and maintain code later. Last, Fiegn support the client - side load balancing.
 
 Some useful steps:
 
-    `@EnableFeignClients`
+    @EnableFeignClients
 
-    `@FeignClient(name="target-ws")`: add on interface which will call to
+    @FeignClient(name="target-ws"): add on interface which will call to
     target service.
+
+    Logger.level.FULL: Show logs when using feign to make it easy for developers
+                           debugging.
