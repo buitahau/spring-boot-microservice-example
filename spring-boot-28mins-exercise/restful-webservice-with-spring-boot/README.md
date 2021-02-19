@@ -109,14 +109,20 @@ Some useful steps:
 
     @EnableFeignClients
 
-    @FeignClient(name="target-ws"): add on interface which will call to
-    target service.
+    @FeignClient(name="target-ws"): add on interface which will call to target service.
 
-    Logger.level.FULL: Show logs when using feign to make it easy for developers
-                           debugging.
+    Logger.level.FULL: Show logs when using feign to make it easy for developers debugging.
 
     ErrorDecoder: it is using to get useful information for example http
     response, status code, body of response, response's header... We can base
      on that error to custom the exception. Beside that, we have a central
      place to handle feign errors. The `decode` method will receive all
      errors from feign.
+
+    @EnableCircuitBreaker: Use to call the fallback method when the target
+    micro service is down. Need to enable hytrix (feign.hystrix.enabled=true)
+     and add fall back property to feign client.
+
+    FallBackFactory: Use to central the fall method when the target micro
+    service is down. It helps to show the log, help the developer
+    know the target micro service is down.
